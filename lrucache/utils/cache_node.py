@@ -10,7 +10,7 @@ class DoublylinkedListNode:
         self.next = None
         self.time_created = time()
 
-    def removeBindings(self):
+    def remove_bindings(self):
         if self.prev is not None:
             self.prev.next = self.next
         if self.next is not None:

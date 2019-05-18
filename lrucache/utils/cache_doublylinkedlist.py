@@ -6,7 +6,7 @@ class DoublylinkedList:
         self.head = None
         self.tail = None
 
-    def setHeadTo(self, node):
+    def set_head_to(self, node):
         if self.head == node:
             return
         elif self.head is None:
@@ -18,13 +18,13 @@ class DoublylinkedList:
             self.head.next = self.tail
         else:
             if self.tail == node:
-                self.removeTail()
-            node.removeBindings()
+                self.remove_tail()
+            node.remove_bindings()
             self.head.prev = node
             node.next = self.head
             self.head = node
 
-    def removeTail(self):
+    def remove_tail(self):
         if self.tail is None:
             return
         if self.tail == self.head:

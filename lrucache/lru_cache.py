@@ -1,13 +1,31 @@
 from collections import MutableMapping
-from time import time, sleep
+from time import time
 
-from utils.cache_thread import RLock, StoppableThread
-from utils.cache_node import DoublylinkedListNode
 from utils.cache_doublylinkedlist import DoublylinkedList
+from utils.cache_node import DoublylinkedListNode
+from utils.cache_thread import RLock, StoppableThread
 
 
 class LRUCache(MutableMapping):
-    """Least Recently Used (LRU) cache implementation."""
+    """Timed Least Recently Used (LRU) cache implementation.
+    
+    TL;DR:
+    The timed LRUCache is a dict-like container that is also size limited.
+    It uses the prune method when called to remove time expired objects.
+
+    Timed LRUCache:
+    All objects on creation have a timestamp on it, this timestamp is used 
+    to check for expired objects when a timeout is given, 
+    the prune method can be run periodically in a thread to do cleanups.
+    
+    Items are kept in a dict but are also mutually linked to
+    each other in sequence of their last access time.
+
+    Access to single items, deletion, and update is done in constant time O(1)
+
+    The size limit, when exceeded will cause the oldest among the not yet expired items
+    to be kicked out of the cache.
+    """
 
     def __init__(self, maxSize, timeout = None):
         self.cache = {}
@@ -15,50 +33,50 @@ class LRUCache(MutableMapping):
         self.timeout = timeout
         self.maxSize = maxSize or 1
         self.currentSize = 0
-        self.listOfMostRecent = DoublylinkedList()
+        self.list_of_most_recent = DoublylinkedList()
 
     def __getitem__(self, key):
-        return self.getValueFromKey(key)
+        return self.get_value(key)
     
     def __setitem__(self, key, value):
-        self.insertKeyValuePair(key, value)
+        self.insert_key_value(key, value)
     
     def __delitem__(self, key):
-        return self.deleteKey(key)
+        return self.delete_key(key)
 
     # O(1) time | 0(1) space
-    def insertKeyValuePair(self, key, value):
+    def insert_key_value(self, key, value):
         try:
             self.lock.acquire()
             if key not in self.cache:
                 if self.currentSize == self.maxSize:
-                    self.evictLeastRecent()
+                    self.evict_least_recent()
                 else:
                     self.currentSize += 1
                 self.cache[key] = DoublylinkedListNode(key, value)
             else:
-                self.updateKey(key, value)
-            self.updateMostRecent(self.cache[key])
+                self.update_key(key, value)
+            self.update_most_recent(self.cache[key])
         finally:
             self.lock.release()
 
     # O(1) time | 0(1) space
-    def getValueFromKey(self, key):
+    def get_value(self, key):
         try:
             self.lock.acquire()
             if key not in self.cache:
                 return None
-            self.updateMostRecent(self.cache[key])
+            self.update_most_recent(self.cache[key])
             return self.cache[key].value
         finally:
             self.lock.release()
 
     # O(1) time | 0(1) space
-    def getMostRecentKey(self):
-        return self.listOfMostRecent.head.key
+    def get_most_recent_key(self):
+        return self.list_of_most_recent.head.key
 
     # O(1) time | 0(1) space
-    def deleteKey(self, key):
+    def delete_key(self, key):
         try:
             self.lock.acquire()
             if key not in self.cache:
@@ -68,8 +86,8 @@ class LRUCache(MutableMapping):
                 node.removeBindings()
                 del self.cache[key]
                 self.currentSize -= 1
-                if self.listOfMostRecent.head == self.listOfMostRecent.tail:
-                    self.listOfMostRecent.removeTail()
+                if self.list_of_most_recent.head == self.list_of_most_recent.tail:
+                    self.list_of_most_recent.removeTail()
         finally:
             self.lock.release()
 
@@ -80,22 +98,22 @@ class LRUCache(MutableMapping):
         try:
             self.lock.acquire()
             outtime = time() - self.timeout
-            tail = self.listOfMostRecent.tail
+            tail = self.list_of_most_recent.tail
             while tail and tail.time_created < outtime:
-                self.evictLeastRecent()
-                tail = self.listOfMostRecent.tail
+                self.evict_least_recent()
+                tail = self.list_of_most_recent.tail
         finally:
             self.lock.release()
 
-    def evictLeastRecent(self):
-        keyToRemove = self.listOfMostRecent.tail.key
-        self.listOfMostRecent.removeTail()
-        del self.cache[keyToRemove]
+    def evict_least_recent(self):
+        key_to_remove = self.list_of_most_recent.tail.key
+        self.list_of_most_recent.remove_tail()
+        del self.cache[key_to_remove]
 
-    def updateMostRecent(self, node):
-        self.listOfMostRecent.setHeadTo(node)
+    def update_most_recent(self, node):
+        self.list_of_most_recent.set_head_to(node)
 
-    def updateKey(self, key, value):
+    def update_key(self, key, value):
         if key not in self.cache:
             raise Exception("The provided key is not in cache")
         self.cache[key].value = value
@@ -141,14 +159,14 @@ class LRUCache(MutableMapping):
 
 # test implementation
 lru = LRUCache(maxSize=4)
-lru.insertKeyValuePair("a", 99)
+lru.insert_key_value("a", 99)
 
 lru["b"] = 202
 lru["c"] = 203
 lru["d"] = 204
 lru["e"] = 205
 
-lru.getValueFromKey("a")
+lru.get_value("a")
 lru.get("a", None)
 
 print(lru)
