@@ -153,3 +153,6 @@ lru.get("a", None)
 
 print(lru)
 print(lru.values())
+
+# LRUCache(timeout=None, size=4, data={'b': 202, 'c': 203, 'd': 204, 'e': 205})
+# [202, 203, 204, 205]
