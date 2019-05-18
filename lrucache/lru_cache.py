@@ -139,6 +139,17 @@ class LRUCache(MutableMapping):
         return f'{self.__class__.__name__}(timeout={self.timeout}, size={self.maxSize}, data={repr(d)})'
 
 
+# test implementation
 lru = LRUCache(maxSize=4)
-
 lru.insertKeyValuePair("a", 99)
+
+lru["b"] = 202
+lru["c"] = 203
+lru["d"] = 204
+lru["e"] = 205
+
+lru.getValueFromKey("a")
+lru.get("a", None)
+
+print(lru)
+print(lru.values())
