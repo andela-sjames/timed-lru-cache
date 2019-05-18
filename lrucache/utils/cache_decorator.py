@@ -4,7 +4,7 @@
 class Decoratorfunc(object):
     """Give decoration function precedence.
     
-    Allow decorator function to be first the argument to
+    Allow decorator function to be the first argument to
     class constructor, this argument will be passed to the
     __call__() method implicitly.
 
