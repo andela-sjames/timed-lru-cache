@@ -155,22 +155,3 @@ class LRUCache(MutableMapping):
     def __repr__(self):
         d = dict(self.items())
         return f'{self.__class__.__name__}(timeout={self.timeout}, size={self.maxSize}, data={repr(d)})'
-
-
-# test implementation
-lru = LRUCache(maxSize=4)
-lru.insert_key_value("a", 99)
-
-lru["b"] = 202
-lru["c"] = 203
-lru["d"] = 204
-lru["e"] = 205
-
-lru.get_value("a")
-lru.get("a", None)
-
-print(lru)
-print(lru.values())
-
-# LRUCache(timeout=None, size=4, data={'b': 202, 'c': 203, 'd': 204, 'e': 205})
-# [202, 203, 204, 205]
