@@ -3,7 +3,7 @@ from time import time
 
 from utils.cache_doublylinkedlist import DoublylinkedList
 from utils.cache_node import DoublylinkedListNode
-from utils.cache_thread import RLock, StoppableThread
+from utils.cache_thread import RLock
 
 
 class LRUCache(MutableMapping):
