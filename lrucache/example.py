@@ -1,11 +1,11 @@
 """Test LRUCache Implementation."""
+import sys
+import threading
 
-from time import sleep
+from time import sleep, ctime
 
 from lru_cache import LRUCache
 from memoize_decorator import MemoizedCache
-
-from utils.cache_thread import StoppableThread
 
 
 lru = LRUCache(maxSize=4)
@@ -56,31 +56,24 @@ report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misse
 print(report)
 # => Hit %: 0.25
 
-
 # Test time constraint, this is still buggy :sweat smile:
-timed_lru = LRUCache(maxSize = 5, timeout=1)
-lruThread = StoppableThread(timed_lru)
+timed_lru = LRUCache(maxSize = 4, timeout=10)
 
 timed_lru["a"] = 202
 timed_lru["b"] = 203
 timed_lru["c"] = 204
 timed_lru["d"] = 205
 timed_lru["e"] = 206
-print(timed_lru)
+print(timed_lru) # LRUCache(timeout=10, size=4, data={'b': 203, 'c': 204, 'd': 205, 'e': 206})
 
-# calling start on the thread makes a call to the lru.prune() method
-# that clears out expired cache after. 
-lruThread.start()
-# lruThread.join()
-sleep(1)
-print(timed_lru)
+sleep(60)
+timed_lru["d"] = 203
+timed_lru["e"] = 204
+timed_lru["f"] = 205
+timed_lru["g"] = 206
+timed_lru["h"] = 207
+print(timed_lru) # LRUCache(timeout=10, size=4, data={'e': 204, 'f': 205, 'g': 206, 'h': 207})
 
-sleep(1)
-print(timed_lru)
-lruThread.stop()
-
-sleep(1)
-print(timed_lru)
-
-sleep(1)
-print(timed_lru)
+sleep(30)
+print(timed_lru) # LRUCache(timeout=10, size=4, data={})
+timed_lru.stop_timer()

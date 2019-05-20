@@ -1,23 +1,26 @@
+import threading
+
 from collections import MutableMapping
-from time import time
+from time import time, ctime
 
 from utils.cache_doublylinkedlist import DoublylinkedList
 from utils.cache_node import DoublylinkedListNode
-from utils.cache_thread import RLock
+from utils.cache_thread import RLock, StoppableThread
 
 
 class LRUCache(MutableMapping):
     """Timed Least Recently Used (LRU) cache implementation.
-    
+
     TL;DR:
     The timed LRUCache is a dict-like container that is also size limited.
-    It uses the prune method when called to remove time expired objects.
+    It uses the prune method when instantiated with time to remove 
+    time expired objects.
 
     Timed LRUCache:
     All objects on creation have a timestamp on it, this timestamp is used 
     to check for expired objects when a timeout is given, 
-    the prune method can be run periodically in a thread to do cleanups.
-    
+    the prune method is called and runs periodically in a thread to do cleanups.
+
     Items are kept in a dict but are also mutually linked to
     each other in sequence of their last access time.
 
@@ -34,13 +37,17 @@ class LRUCache(MutableMapping):
         self.maxSize = maxSize or 1
         self.currentSize = 0
         self.list_of_most_recent = DoublylinkedList()
+        self.timer = None
+
+        if self.timeout:
+            self._cleanup()
 
     def __getitem__(self, key):
         return self.get_value(key)
-    
+
     def __setitem__(self, key, value):
         self.insert_key_value(key, value)
-    
+
     def __delitem__(self, key):
         return self.delete_key(key)
 
@@ -101,6 +108,7 @@ class LRUCache(MutableMapping):
             tail = self.list_of_most_recent.tail
             while tail and tail.time_created < outtime:
                 self.evict_least_recent()
+                self.currentSize -= 1
                 tail = self.list_of_most_recent.tail
         finally:
             self.lock.release()
@@ -117,6 +125,15 @@ class LRUCache(MutableMapping):
         if key not in self.cache:
             raise Exception("The provided key is not in cache")
         self.cache[key].value = value
+
+    def _cleanup(self):
+        self.prune()
+        timer = threading.Timer(self.timeout, self._cleanup)
+        timer.start()
+        self.timer = timer
+
+    def stop_timer(self):
+        self.timer.cancel()
 
     def _contents(self, method, *args):
         '''
@@ -137,7 +154,7 @@ class LRUCache(MutableMapping):
 
     def __len__(self):
         return self._contents('__len__')
-    
+
     def __iter__(self):
         return self._contents('__iter__')
 
