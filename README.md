@@ -6,7 +6,7 @@ The timed LRUCache is a dict-like container that is also size limited.
 It uses the prune method when instantiated with time to remove time expired objects.
 
 
-### Example Usage
+### Example
 
 #### Simple LRUCache
 
@@ -31,7 +31,7 @@ print(lru.values())
 # [202, 203, 204, 205]
 ```
 
-#### Test memoization: Sample Usage with the decorator
+#### Test memoization: Sample use with the decorator
 ```Python
 from lru_cache import LRUCache
 from memoize_decorator import MemoizedCache
@@ -42,7 +42,7 @@ def get_random(max_value):
     return random.random() * max_value
 
 print(get_random(1)) # 0.8926141265778564
-print(get_random(1)) # 0.8926141265778564
+print(get_random(1)) # 0.89261gs41265778564
 print(get_random(3)) # 1.9138579745807172
 print(get_random(4)) # 3.5772986693895916
 print(get_random(5)) # 0.5001657308606899
