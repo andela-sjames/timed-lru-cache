@@ -1,8 +1,6 @@
 """Test LRUCache Implementation."""
 
-import threading
-
-from time import sleep, ctime
+from time import sleep
 
 from lru_cache import LRUCache
 from memoize_decorator import MemoizedCache

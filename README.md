@@ -7,19 +7,16 @@ It uses the prune method when instantiated with time to remove time expired obje
 
 
 ### Example Usage
+
+#### Simple LRUCache
+
 ```python
-import threading
-
-from time import sleep, ctime
-
 from lru_cache import LRUCache
-from memoize_decorator import MemoizedCache
-
 
 lru = LRUCache(maxSize=4)
 lru.insert_key_value("a", 99)
 
-lru["b"] = 202
+lru.insert_key_value("b", 202)
 lru["c"] = 203
 lru["d"] = 204
 lru["e"] = 205
@@ -32,10 +29,13 @@ print(lru.values())
 
 # LRUCache(timeout=None, size=4, data={'b': 202, 'c': 203, 'd': 204, 'e': 205})
 # [202, 203, 204, 205]
+```
 
+#### Test memoization: Sample Usage with the decorator
+```Python
+from lru_cache import LRUCache
+from memoize_decorator import MemoizedCache
 
-# Test memoization
-# Sample Usage with the decorator
 @MemoizedCache(cache=LRUCache(maxSize=5))
 def get_random(max_value):
     import random
@@ -63,8 +63,13 @@ get_random.cache_info()
 report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
 print(report)
 # => Hit %: 0.25
+```
 
-# Test time constraint, this is still buggy :sweat smile:
+#### Test time constraint
+```Python
+from time import sleep
+from lru_cache import LRUCache
+
 timed_lru = LRUCache(maxSize = 4, timeout=10)
 
 timed_lru["a"] = 202
