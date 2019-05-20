@@ -27,8 +27,6 @@ class MemoizedCache(Decoratorfunc):
         cache_info = f'{self.__class__.__name__}(hits={self.hits}, misses={self.misses}, maxsize={self.cache.maxSize}, currsize={self.cache.currentSize})'
         print(cache_info)
 
-    # TODO: Clear cache from memoize decorator?
-
     def __call__(self, *args, **kwargs):
 
         key = self._convert_call_arguments_to_hash(args, kwargs)
