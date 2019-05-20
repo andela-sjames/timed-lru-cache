@@ -90,7 +90,7 @@ class LRUCache(MutableMapping):
                 return None
             else:
                 node = self.cache[key]
-                node.removeBindings()
+                node.remove_bindings()
                 del self.cache[key]
                 self.currentSize -= 1
                 if self.list_of_most_recent.head == self.list_of_most_recent.tail:
