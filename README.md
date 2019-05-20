@@ -77,17 +77,23 @@ timed_lru["b"] = 203
 timed_lru["c"] = 204
 timed_lru["d"] = 205
 timed_lru["e"] = 206
+
+# cache size remains 4, after inserting 5 items into cache.
 print(timed_lru) # LRUCache(timeout=10, size=4, data={'b': 203, 'c': 204, 'd': 205, 'e': 206})
 
 sleep(60)
+# cache should be empty after 60s as it clears it's entry after 10s (timeout)
 timed_lru["d"] = 203
 timed_lru["e"] = 204
 timed_lru["f"] = 205
 timed_lru["g"] = 206
 timed_lru["h"] = 207
+
+# cache now has new entries
 print(timed_lru) # LRUCache(timeout=10, size=4, data={'e': 204, 'f': 205, 'g': 206, 'h': 207})
 
 sleep(30)
+# cache entry expires after 10s and as a result we have nothing in the cache (data = {}).
 print(timed_lru) # LRUCache(timeout=10, size=4, data={})
 timed_lru.stop_timer()
 ```
