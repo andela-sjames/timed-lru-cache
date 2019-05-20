@@ -82,7 +82,7 @@ timed_lru["e"] = 206
 print(timed_lru) # LRUCache(timeout=10, size=4, data={'b': 203, 'c': 204, 'd': 205, 'e': 206})
 
 sleep(60)
-# cache should be empty after 60s as it clears it's entry after 10s (timeout)
+# cache should be empty after 60s as it clears its entry after 10s (timeout)
 timed_lru["d"] = 203
 timed_lru["e"] = 204
 timed_lru["f"] = 205
