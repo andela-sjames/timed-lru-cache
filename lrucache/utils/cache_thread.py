@@ -1,6 +1,5 @@
 "Thread safe RLock defined for lru cache."
 
-import threading
 
 def RLock():
     """
