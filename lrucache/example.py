@@ -1,5 +1,5 @@
 """Test LRUCache Implementation."""
-import sys
+
 import threading
 
 from time import sleep, ctime
