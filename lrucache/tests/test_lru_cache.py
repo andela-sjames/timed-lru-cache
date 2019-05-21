@@ -106,6 +106,7 @@ def testLruWithTimeConstraint(size, timeout, testContext):
 
 
 class LRUCacheSizeTestCase(unittest.TestCase):
+
     def test_size_1(self):
         testLruOfSize(1, self)
 
@@ -136,12 +137,20 @@ class LRUCacheSizeTestCase(unittest.TestCase):
     def test_size_10(self):
         testLruOfSize(10, self)
 
+
 class LRUTimeConstraintTestCase(unittest.TestCase):
+
+    @unittest.skip(reason="Do not run thread temporarily")
     def test_time_constraint_1_sec_size_5(self):
         testLruWithTimeConstraint(5, 1, self)
 
+    @unittest.skip(reason="Do not run thread temporarily")
     def test_time_constraint_1_sec_size_10(self):
         testLruWithTimeConstraint(10, 1, self)
+
+
+class MemoizationTestCase(unittest.TestCase):
+    pass
 
 
 if __name__ == "__main__":
