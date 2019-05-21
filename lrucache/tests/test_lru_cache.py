@@ -25,7 +25,7 @@ alphabetMaps = {
 
 alphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 
-def testLruOfSize(size, testContext):
+def test_lru_of_size(size, testContext):
     
     # Instantiate cache and insert first key.
     lru = LRUCache(size)
@@ -93,7 +93,7 @@ def testLruOfSize(size, testContext):
         lru.insert_key_value(currentLetter, (alphabetMaps[currentLetter] + 1) * 100)
         testContext.assertEqual(lru.get_value(currentLetter), (alphabetMaps[currentLetter] + 1) * 100)
 
-def testLruWithTimeConstraint(size, timeout, testContext):
+def test_lru_with_time_constraint(size, timeout, testContext):
     timed_lru = LRUCache(size, timeout)
 
     for i in range(0, size):
@@ -106,7 +106,7 @@ def testLruWithTimeConstraint(size, timeout, testContext):
     testContext.assertEqual(len(timed_lru.keys()), 0)
     timed_lru.stop_timer()
 
-def testLruWithMemoizedCache(size, testContext):
+def test_lru_with_memoized_cache(size, testContext):
 
     @MemoizedCache(cache=LRUCache(maxSize=size))
     def get_random(max_value):
@@ -123,50 +123,48 @@ def testLruWithMemoizedCache(size, testContext):
 class LRUCacheSizeTestCase(unittest.TestCase):
 
     def test_size_1(self):
-        testLruOfSize(1, self)
+        test_lru_of_size(1, self)
 
     def test_size_2(self):
-        testLruOfSize(2, self)
+        test_lru_of_size(2, self)
 
     def test_size_3(self):
-        testLruOfSize(3, self)
+        test_lru_of_size(3, self)
 
     def test_size_4(self):
-        testLruOfSize(4, self)
+        test_lru_of_size(4, self)
 
     def test_size_5(self):
-        testLruOfSize(5, self)
+        test_lru_of_size(5, self)
 
     def test_size_6(self):
-        testLruOfSize(6, self)
+        test_lru_of_size(6, self)
 
     def test_size_7(self):
-        testLruOfSize(7, self)
+        test_lru_of_size(7, self)
 
     def test_size_8(self):
-        testLruOfSize(8, self)
+        test_lru_of_size(8, self)
 
     def test_size_9(self):
-        testLruOfSize(9, self)
+        test_lru_of_size(9, self)
 
     def test_size_10(self):
-        testLruOfSize(10, self)
+        test_lru_of_size(10, self)
 
 
 class LRUTimeConstraintTestCase(unittest.TestCase):
 
-    @unittest.skip(reason="Do not run thread temporarily")
     def test_time_constraint_1_sec_size_5(self):
-        testLruWithTimeConstraint(5, 1, self)
+        test_lru_with_time_constraint(5, 1, self)
 
-    @unittest.skip(reason="Do not run thread temporarily")
     def test_time_constraint_1_sec_size_10(self):
-        testLruWithTimeConstraint(10, 1, self)
+        test_lru_with_time_constraint(10, 1, self)
 
 
 class LRUMemoizationTestCase(unittest.TestCase):
     def test_it(self):
-        testLruWithMemoizedCache(5, self)
+        test_lru_with_memoized_cache(5, self)
 
 
 if __name__ == "__main__":
