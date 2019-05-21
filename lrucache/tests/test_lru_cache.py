@@ -7,6 +7,7 @@ from time import sleep
 sys.path.insert(0, os.pardir)
 
 from lru_cache import LRUCache
+from memoize_decorator import MemoizedCache
 
 
 alphabetMaps = {
@@ -101,8 +102,22 @@ def testLruWithTimeConstraint(size, timeout, testContext):
 
     testContext.assertEqual(len(timed_lru.keys()), size)
     sleep(2)
+
     testContext.assertEqual(len(timed_lru.keys()), 0)
     timed_lru.stop_timer()
+
+def testLruWithMemoizedCache(size, testContext):
+
+    @MemoizedCache(cache=LRUCache(maxSize=size))
+    def get_random(max_value):
+        import random
+        return random.random() * max_value
+
+    # generate 8 random values
+    for idx in range(1, 9):
+        get_random(idx)
+
+    testContext.assertEqual(len(get_random.cache), size)
 
 
 class LRUCacheSizeTestCase(unittest.TestCase):
@@ -149,8 +164,9 @@ class LRUTimeConstraintTestCase(unittest.TestCase):
         testLruWithTimeConstraint(10, 1, self)
 
 
-class MemoizationTestCase(unittest.TestCase):
-    pass
+class LRUMemoizationTestCase(unittest.TestCase):
+    def test_it(self):
+        testLruWithMemoizedCache(5, self)
 
 
 if __name__ == "__main__":
