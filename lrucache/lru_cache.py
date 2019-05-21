@@ -94,7 +94,7 @@ class LRUCache(MutableMapping):
                 del self.cache[key]
                 self.currentSize -= 1
                 if self.list_of_most_recent.head == self.list_of_most_recent.tail:
-                    self.list_of_most_recent.removeTail()
+                    self.list_of_most_recent.remove_tail()
         finally:
             self.lock.release()
 
