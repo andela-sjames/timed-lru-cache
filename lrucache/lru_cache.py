@@ -1,7 +1,7 @@
 import threading
 
 from collections import MutableMapping
-from time import time, ctime
+from time import time
 
 from utils.cache_doublylinkedlist import DoublylinkedList
 from utils.cache_node import DoublylinkedListNode

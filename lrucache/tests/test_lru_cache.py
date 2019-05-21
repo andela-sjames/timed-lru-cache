@@ -2,6 +2,8 @@ import os
 import sys
 import unittest
 
+from time import sleep
+
 sys.path.insert(0, os.pardir)
 
 from lru_cache import LRUCache
@@ -90,6 +92,18 @@ def testLruOfSize(size, testContext):
         lru.insert_key_value(currentLetter, (alphabetMaps[currentLetter] + 1) * 100)
         testContext.assertEqual(lru.get_value(currentLetter), (alphabetMaps[currentLetter] + 1) * 100)
 
+def testLruWithTimeConstraint(size, timeout, testContext):
+    timed_lru = LRUCache(size, timeout)
+
+    for i in range(0, size):
+        alphabet = alphabets[i]
+        timed_lru.insert_key_value(alphabet, alphabetMaps[alphabet])
+
+    testContext.assertEqual(len(timed_lru.keys()), size)
+    sleep(2)
+    testContext.assertEqual(len(timed_lru.keys()), 0)
+    timed_lru.stop_timer()
+
 
 class LRUCacheSizeTestCase(unittest.TestCase):
     def test_size_1(self):
@@ -121,6 +135,13 @@ class LRUCacheSizeTestCase(unittest.TestCase):
 
     def test_size_10(self):
         testLruOfSize(10, self)
+
+class LRUTimeConstraintTestCase(unittest.TestCase):
+    def test_time_constraint_1_sec_size_5(self):
+        testLruWithTimeConstraint(5, 1, self)
+
+    def test_time_constraint_1_sec_size_10(self):
+        testLruWithTimeConstraint(10, 1, self)
 
 
 if __name__ == "__main__":
