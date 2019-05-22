@@ -178,4 +178,4 @@ class LRUCache(MutableMapping):
         time_out = f'timeout={self.timeout}'
         size = f'size={self.maxSize}'
         data = f'data={repr(d)}'
-        return f'{class_name}({time_out} {size} {data})'
+        return f'{class_name}({time_out}, {size}, {data})'

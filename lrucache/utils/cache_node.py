@@ -2,6 +2,7 @@
 
 from time import time
 
+
 class DoublylinkedListNode:
     def __init__(self, key, value):
         self.key = key
