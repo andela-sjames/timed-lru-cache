@@ -13,24 +13,25 @@ class LRUCache(MutableMapping):
 
     TL;DR:
     The timed LRUCache is a dict-like container that is also size limited.
-    It uses the prune method when instantiated with time to remove 
+    It uses the prune method when instantiated with time to remove
     time expired objects.
 
     Timed LRUCache:
-    All objects on creation have a timestamp on it, this timestamp is used 
-    to check for expired objects when a timeout is given, 
-    the prune method is called and runs periodically in a thread to do cleanups.
+    All objects on creation have a timestamp on it, this timestamp is used
+    to check for expired objects when a timeout is given,
+    the prune method is called and runs periodically in a thread
+    to do cleanups.
 
     Items are kept in a dict but are also mutually linked to
     each other in sequence of their last access time.
 
     Access to single items, deletion, and update is done in constant time O(1)
 
-    The size limit, when exceeded will cause the oldest among the not yet expired items
-    to be kicked out of the cache.
+    The size limit, when exceeded will cause the oldest among the
+    not yet expired items to be kicked out of the cache.
     """
 
-    def __init__(self, maxSize, timeout = None):
+    def __init__(self, maxSize, timeout=None):
         self.cache = {}
         self.lock = RLock()
         self.timeout = timeout
@@ -93,7 +94,9 @@ class LRUCache(MutableMapping):
                 node.remove_bindings()
                 del self.cache[key]
                 self.currentSize -= 1
-                if self.list_of_most_recent.head == self.list_of_most_recent.tail:
+                head = self.list_of_most_recent.head
+                tail = self.list_of_most_recent.tail
+                if head == tail:
                     self.list_of_most_recent.remove_tail()
         finally:
             self.lock.release()
@@ -171,4 +174,8 @@ class LRUCache(MutableMapping):
 
     def __repr__(self):
         d = dict(self.items())
-        return f'{self.__class__.__name__}(timeout={self.timeout}, size={self.maxSize}, data={repr(d)})'
+        class_name = self.__class__.__name__
+        time_out = f'timeout={self.timeout}'
+        size = f'size={self.maxSize}'
+        data = f'data={repr(d)}'
+        return f'{class_name}({time_out} {size} {data})'
