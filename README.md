@@ -29,6 +29,22 @@ print(lru.values())
 
 # LRUCache(timeout=None, size=4, data={'b': 202, 'c': 203, 'd': 204, 'e': 205})
 # [202, 203, 204, 205]
+
+# insert into lrucache
+lru.insert_key_value("j", 302)
+# or
+lru["k"] = 403
+
+# retrieve from the lrucache
+lru.get_value("z")
+# or
+lru.get("z", None)
+
+# delete from the lrucache
+lru.delete_key("z")
+# or
+lru.pop("z", None)
+
 ```
 
 #### Test memoization: Sample use with the decorator
@@ -58,6 +74,9 @@ print(get_random.hits)
 # cache info
 get_random.cache_info()
 # => MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+
+# reset  hits and misses count.
+get_random.reset()
 
 # Simple report on performance
 report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
