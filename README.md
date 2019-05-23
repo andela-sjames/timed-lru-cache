@@ -57,14 +57,16 @@ def get_random(max_value):
     import random
     return random.random() * max_value
 
-print(get_random(1)) # 0.8926141265778564
-print(get_random(1)) # 0.89261gs41265778564
-print(get_random(3)) # 1.9138579745807172
-print(get_random(4)) # 3.5772986693895916
-print(get_random(5)) # 0.5001657308606899
-print(get_random(5)) # 0.5001657308606899
-print(get_random(7)) # 0.7652871914811611
-print(get_random(1)) # 0.6811475789638526
+print(get_random(1)) # 0.6869437097681024
+print(get_random(1)) # 0.6869437097681024
+print(get_random(3)) # 1.2792457326076399
+print(get_random(4)) # 1.9216226691107239
+print(get_random(5)) # 3.442601057826532
+print(get_random(5)) # 3.442601057826532
+print(get_random(7)) # 0.6831533160972438
+print(get_random(8)) # 7.40200570325546
+print(get_random(1)) # 0.37636284785825047
+
 
 print(get_random.misses)
 # => 7
@@ -82,6 +84,20 @@ get_random.reset()
 report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
 print(report)
 # => Hit %: 0.2222222222222222
+
+# check the cache stored key, value, items pairs
+print(get_random.cache.keys())
+# => dict_keys([-5205072475343462643, 8575776084210548143, -2238842041537299568, -8811688270097994377, 2613783748954017437])
+
+print(get_random.cache.values())
+# => [1.9216226691107239, 3.442601057826532, 0.6831533160972438, 7.40200570325546, 0.37636284785825047]
+
+print(get_random.cache.items())
+# => [
+#     (-5205072475343462643, 1.9216226691107239), (8575776084210548143, 3.442601057826532), 
+#     (-2238842041537299568, 0.6831533160972438), (-8811688270097994377, 7.40200570325546), 
+#     (2613783748954017437, 0.37636284785825047)
+# ]
 ```
 
 #### Test time constraint
@@ -89,7 +105,7 @@ print(report)
 from time import sleep
 from lru_cache import LRUCache
 
-timed_lru = LRUCache(maxSize = 4, timeout=10)
+timed_lru = LRUCache(maxSize=4, timeout=10)
 
 timed_lru["a"] = 202
 timed_lru["b"] = 203
