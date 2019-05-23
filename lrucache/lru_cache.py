@@ -58,13 +58,13 @@ class LRUCache(MutableMapping):
             self.lock.acquire()
             if key not in self.cache:
                 if self.currentSize == self.maxSize:
-                    self.evict_least_recent()
+                    self._evict_least_recent()
                 else:
                     self.currentSize += 1
                 self.cache[key] = DoublylinkedListNode(key, value)
             else:
-                self.update_key(key, value)
-            self.update_most_recent(self.cache[key])
+                self._update_key(key, value)
+            self._update_most_recent(self.cache[key])
         finally:
             self.lock.release()
 
@@ -74,7 +74,7 @@ class LRUCache(MutableMapping):
             self.lock.acquire()
             if key not in self.cache:
                 return None
-            self.update_most_recent(self.cache[key])
+            self._update_most_recent(self.cache[key])
             return self.cache[key].value
         finally:
             self.lock.release()
@@ -102,7 +102,7 @@ class LRUCache(MutableMapping):
             self.lock.release()
 
     # O(n) time | O(1) space
-    def prune(self):
+    def _prune(self):
         if not len(self.cache):
             return
         try:
@@ -110,27 +110,27 @@ class LRUCache(MutableMapping):
             outtime = time() - self.timeout
             tail = self.list_of_most_recent.tail
             while tail and tail.time_created < outtime:
-                self.evict_least_recent()
+                self._evict_least_recent()
                 self.currentSize -= 1
                 tail = self.list_of_most_recent.tail
         finally:
             self.lock.release()
 
-    def evict_least_recent(self):
+    def _evict_least_recent(self):
         key_to_remove = self.list_of_most_recent.tail.key
         self.list_of_most_recent.remove_tail()
         del self.cache[key_to_remove]
 
-    def update_most_recent(self, node):
+    def _update_most_recent(self, node):
         self.list_of_most_recent.set_head_to(node)
 
-    def update_key(self, key, value):
+    def _update_key(self, key, value):
         if key not in self.cache:
             raise Exception("The provided key is not in cache")
         self.cache[key].value = value
 
     def _cleanup(self):
-        self.prune()
+        self._prune()
         timer = threading.Timer(self.timeout, self._cleanup)
         timer.start()
         self.timer = timer
