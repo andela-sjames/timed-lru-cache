@@ -6,8 +6,8 @@ from time import sleep
 
 sys.path.insert(0, os.pardir)
 
-from lru_cache import LRUCache
-from memoize_decorator import MemoizedCache
+from lrucache.lru_cache import LRUCache
+from lrucache.memoize_decorator import MemoizedCache
 
 
 alphabetMaps = {

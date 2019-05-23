@@ -2,7 +2,7 @@
 
 from types import MethodType
 
-from utils.cache_decorator import Decoratorfunc
+from .utils.cache_decorator import Decoratorfunc
 
 
 class MemoizedCache(Decoratorfunc):

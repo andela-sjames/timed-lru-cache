@@ -3,9 +3,9 @@ import threading
 from collections import MutableMapping
 from time import time
 
-from utils.cache_doublylinkedlist import DoublylinkedList
-from utils.cache_node import DoublylinkedListNode
-from utils.cache_thread import RLock
+from .utils.cache_doublylinkedlist import DoublylinkedList
+from .utils.cache_node import DoublylinkedListNode
+from .utils.cache_thread import RLock
 
 
 class LRUCache(MutableMapping):

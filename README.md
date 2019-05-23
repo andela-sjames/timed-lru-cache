@@ -11,7 +11,7 @@ It uses the prune method when instantiated with time to remove time expired obje
 #### Simple LRUCache
 
 ```python
-from lru_cache import LRUCache
+from lrucache.lru_cache import LRUCache
 
 lru = LRUCache(maxSize=4)
 lru.insert_key_value("a", 99)
@@ -49,8 +49,8 @@ lru.pop("z", None)
 
 #### Test memoization: Sample use with the decorator
 ```Python
-from lru_cache import LRUCache
-from memoize_decorator import MemoizedCache
+from lrucache.lru_cache import LRUCache
+from lrucache.memoize_decorator import MemoizedCache
 
 @MemoizedCache(cache=LRUCache(maxSize=5))
 def get_random(max_value):
@@ -103,7 +103,7 @@ print(get_random.cache.items())
 #### Test time constraint
 ```Python
 from time import sleep
-from lru_cache import LRUCache
+from lrucache.lru_cache import LRUCache
 
 timed_lru = LRUCache(maxSize=4, timeout=10)
 

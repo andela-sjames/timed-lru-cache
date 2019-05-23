@@ -2,8 +2,8 @@
 
 from time import sleep
 
-from lru_cache import LRUCache
-from memoize_decorator import MemoizedCache
+from lrucache.lru_cache import LRUCache
+from lrucache.memoize_decorator import MemoizedCache
 
 
 lru = LRUCache(maxSize=4)
