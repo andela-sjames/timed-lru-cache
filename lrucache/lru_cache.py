@@ -175,7 +175,7 @@ class LRUCache(MutableMapping):
     def __repr__(self):
         d = dict(self.items())
         class_name = self.__class__.__name__
-        time_out = f'timeout={self.timeout}'
+        timeout = f'timeout={self.timeout}'
         size = f'size={self.maxSize}'
         data = f'data={repr(d)}'
-        return f'{class_name}({time_out}, {size}, {data})'
+        return f'{class_name}({timeout}, {size}, {data})'
