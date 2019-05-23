@@ -80,14 +80,6 @@ print(get_random.hits)
 get_random.cache_info()
 # => MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
 
-# reset  hits and misses count.
-get_random.reset()
-
-# Simple report on performance
-report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
-print(report)
-# => Hit %: 0.2222222222222222
-
 # check the cache stored key, value, items pairs
 print(get_random.cache.keys())
 # => dict_keys([-5205072475343462643, 8575776084210548143, -2238842041537299568, -8811688270097994377, 2613783748954017437])
@@ -101,6 +93,15 @@ print(get_random.cache.items())
 #     (-2238842041537299568, 0.6831533160972438), (-8811688270097994377, 7.40200570325546), 
 #     (2613783748954017437, 0.37636284785825047)
 # ]
+
+
+# Simple report on performance
+report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
+print(report)
+# => Hit %: 0.2222222222222222
+
+# reset  hits and misses count.
+get_random.reset()
 ```
 
 #### Test time constraint
