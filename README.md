@@ -96,11 +96,12 @@ print(get_random.cache.items())
 
 
 # Simple report on performance
+# check report before get_random.reset() 
 report = f'Hit %: {(float(get_random.hits) / (get_random.hits + get_random.misses))}'
 print(report)
 # => Hit %: 0.2222222222222222
 
-# reset  hits and misses count.
+# reset hits and misses count to zero.
 get_random.reset()
 ```
 
