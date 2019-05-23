@@ -3,6 +3,11 @@ timed-lru-cache
 
 A time constraint LRUCache Implementation
 
+Installation
+~~~~~~~~~~~~
+
+``pip install timed-lru-cache``
+
 Summary
 ~~~~~~~
 

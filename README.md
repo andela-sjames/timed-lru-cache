@@ -1,6 +1,9 @@
 # timed-lru-cache
 A time constraint LRUCache Implementation
 
+### Installation
+`pip install timed-lru-cache`
+
 ### Summary
 The timed LRUCache is a dict-like container that is also size limited.
 It uses the prune method when instantiated with time to remove time expired objects.
