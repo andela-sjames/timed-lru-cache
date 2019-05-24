@@ -63,9 +63,9 @@ Test memoization: Sample use with the decorator
 .. code:: python
 
    from lrucache.lru_cache import LRUCache
-   from lrucache.memoize_decorator import MemoizedCache
+   from lrucache.memoize_decorator import memoized_cache
 
-   @MemoizedCache(cache=LRUCache(maxSize=5))
+   @memoized_cache(cache=LRUCache(maxSize=5))
    def get_random(max_value):
        import random
        return random.random() * max_value
@@ -88,7 +88,7 @@ Test memoization: Sample use with the decorator
 
    # cache info
    get_random.cache_info()
-   # => MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+   # => memoized_cache(hits=2, misses=7, maxsize=5, currsize=5)
 
    # check the cache stored key, value, items pairs
    print(get_random.cache.keys())

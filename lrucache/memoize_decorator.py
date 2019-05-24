@@ -5,10 +5,10 @@ from types import MethodType
 from .utils.cache_decorator import Decoratorfunc
 
 
-class MemoizedCache(Decoratorfunc):
+class memoized_cache(Decoratorfunc):
     """Class decorator defined.
 
-    NB: Class decorator applied on a function returns an
+    NB: Callable class decorator applied on a function returns an
     instance of the decorator class instead of a modified
     function as with function decorators.
     """

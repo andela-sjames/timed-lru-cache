@@ -53,9 +53,9 @@ lru.pop("z", None)
 #### Test memoization: Sample use with the decorator
 ```Python
 from lrucache.lru_cache import LRUCache
-from lrucache.memoize_decorator import MemoizedCache
+from lrucache.memoize_decorator import memoized_cache
 
-@MemoizedCache(cache=LRUCache(maxSize=5))
+@memoized_cache(cache=LRUCache(maxSize=5))
 def get_random(max_value):
     import random
     return random.random() * max_value
@@ -78,7 +78,7 @@ print(get_random.hits)
 
 # cache info
 get_random.cache_info()
-# => MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+# => memoized_cache(hits=2, misses=7, maxsize=5, currsize=5)
 
 # check the cache stored key, value, items pairs
 print(get_random.cache.keys())
@@ -140,7 +140,7 @@ timed_lru.stop_timer()
 
 #### Sample Usage with the decorator (maxSize and timeout)
 ```python
-@MemoizedCache(cache=LRUCache(maxSize=5, timeout=5))
+@memoized_cache(cache=LRUCache(maxSize=5, timeout=5))
 def get_random(max_value):
     import random
     return random.random() * max_value
@@ -155,7 +155,7 @@ get_random(7)
 get_random(8)
 get_random(1)
 
-get_random.cache_info() # MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+get_random.cache_info() # memoized_cache(hits=2, misses=7, maxsize=5, currsize=5)
 
 print(get_random.cache.values())
 # => [2.108203625973244, 0.2784180276772963, 3.9932738384806856, 1.2462533799577011, 0.8501249397423805]
@@ -169,7 +169,7 @@ print(get_random.cache.values())
 # [2.108203625973244, 0.2784180276772963, 3.9932738384806856, 1.2462533799577011, 0.8501249397423805]
 
 sleep(20)
-get_random.cache_info() # MemoizedCache(hits=2, misses=7, maxsize=5, currsize=0)
+get_random.cache_info() # memoized_cache(hits=2, misses=7, maxsize=5, currsize=0)
 
 # stop the timer
 get_random.cache.stop_timer()

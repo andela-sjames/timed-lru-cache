@@ -3,7 +3,7 @@
 from time import sleep
 
 from lrucache.lru_cache import LRUCache
-from lrucache.memoize_decorator import MemoizedCache
+from lrucache.memoize_decorator import memoized_cache
 
 
 lru = LRUCache(maxSize=4)
@@ -26,7 +26,7 @@ print(lru.values())
 
 # Test memoization
 # Sample Usage with the decorator (maxSize)
-@MemoizedCache(cache=LRUCache(maxSize=5))
+@memoized_cache(cache=LRUCache(maxSize=5))
 def get_random(max_value):
     import random
     return random.random() * max_value
@@ -48,7 +48,7 @@ print(get_random.hits)
 
 # cache info
 get_random.cache_info()
-# => MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+# => memoized_cache(hits=2, misses=7, maxsize=5, currsize=5)
 
 # check the cache stored key, value, items pairs
 print(get_random.cache.keys())
@@ -93,7 +93,7 @@ timed_lru.stop_timer()
 
 
 # Sample Usage with the decorator (maxSize and timeout)
-@MemoizedCache(cache=LRUCache(maxSize=5, timeout=5))
+@memoized_cache(cache=LRUCache(maxSize=5, timeout=5))
 def get_random(max_value):
     import random
     return random.random() * max_value
