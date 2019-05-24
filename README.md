@@ -137,3 +137,33 @@ sleep(30)
 print(timed_lru) # LRUCache(timeout=10, size=4, data={})
 timed_lru.stop_timer()
 ```
+
+#### Sample Usage with the decorator (maxSize and timeout)
+```python
+@MemoizedCache(cache=LRUCache(maxSize=5, timeout=5))
+def get_random(max_value):
+    import random
+    return random.random() * max_value
+
+get_random(1)
+get_random(1)
+get_random(3)
+get_random(4)
+get_random(5)
+get_random(5)
+get_random(7)
+get_random(8)
+get_random(1)
+
+get_random.cache_info()
+print(get_random.cache.values())
+print(get_random.cache.items())
+print(get_random.cache.keys())
+print(get_random.cache.values())
+print(get_random.cache.values())
+
+sleep(20)
+
+get_random.cache_info()
+get_random.cache.stop_timer()
+```
