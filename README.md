@@ -155,15 +155,22 @@ get_random(7)
 get_random(8)
 get_random(1)
 
-get_random.cache_info()
+get_random.cache_info() # MemoizedCache(hits=2, misses=7, maxsize=5, currsize=5)
+
 print(get_random.cache.values())
-print(get_random.cache.items())
+# => [2.108203625973244, 0.2784180276772963, 3.9932738384806856, 1.2462533799577011, 0.8501249397423805]
+
+print(get_random.cache.items()) # [(7793041093296417556, 2.108203625973244), (-5573334794002472495, 0.2784180276772963), (6169942939433972205, 3.9932738384806856), (-179359314705978364, 1.2462533799577011), (2135404498036021478, 0.8501249397423805)]
+
 print(get_random.cache.keys())
+# dict_keys([7793041093296417556, -5573334794002472495, 6169942939433972205, -179359314705978364, 2135404498036021478])
+
 print(get_random.cache.values())
-print(get_random.cache.values())
+# [2.108203625973244, 0.2784180276772963, 3.9932738384806856, 1.2462533799577011, 0.8501249397423805]
 
 sleep(20)
+get_random.cache_info() # MemoizedCache(hits=2, misses=7, maxsize=5, currsize=0)
 
-get_random.cache_info()
+# stop the timer
 get_random.cache.stop_timer()
 ```
