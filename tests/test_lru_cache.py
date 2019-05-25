@@ -7,7 +7,7 @@ from time import sleep
 sys.path.insert(0, os.pardir)
 
 from lrucache.lru_cache import LRUCache
-from lrucache.memoize_decorator import MemoizedCache
+from lrucache.memoize_decorator import memoized_cache
 
 
 alphabetMaps = {
@@ -108,7 +108,7 @@ def test_lru_with_time_constraint(size, timeout, testContext):
 
 def test_lru_with_memoized_cache(size, testContext):
 
-    @MemoizedCache(cache=LRUCache(maxSize=size))
+    @memoized_cache(cache=LRUCache(maxSize=size))
     def get_random(max_value):
         import random
         return random.random() * max_value
