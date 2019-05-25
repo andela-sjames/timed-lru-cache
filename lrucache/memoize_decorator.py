@@ -26,10 +26,12 @@ class memoized_cache(Decoratorfunc):
         self.misses = 0
 
     def reset(self):
+        """Set the counts to zero."""
         self.hits = 0
         self.misses = 0
 
     def cache_info(self):
+        """Return the basic cache info."""
         class_name = self.__class__.__name__
         hits = f'hits={self.hits}'
         misses = f'misses={self.misses}'
