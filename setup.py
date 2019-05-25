@@ -19,7 +19,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='timed_lru_cache',
+    name='timedLruCache',
     version='0.1.0',
     description='A time constraint LRUCache Implementation',
     long_description=long_description,

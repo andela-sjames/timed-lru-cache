@@ -2,7 +2,7 @@
 A time constraint LRUCache Implementation
 
 ### Installation
-`pip install timed-lru-cache`
+`pip install timedLruCache`
 
 ### Summary
 The timed LRUCache is a dict-like container that is also size limited.
