@@ -6,7 +6,7 @@ A time constraint LRUCache Implementation
 Installation
 ~~~~~~~~~~~~
 
-``pip install timed-lru-cache``
+``pip install timedLruCache``
 
 Summary
 ~~~~~~~
