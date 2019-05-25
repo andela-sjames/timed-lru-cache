@@ -16,7 +16,7 @@ class memoized_cache(Decoratorfunc):
         func: The decorated function.
         cache: An instance of the LRUCache.
         hits: The number of times a cache value is used.
-        misses: The number of times a cache is not used.
+        misses: The number of times a cache value is not used.
     """
 
     def __init__(self, func, cache):
