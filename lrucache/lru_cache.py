@@ -29,6 +29,15 @@ class LRUCache(MutableMapping):
 
     The size limit, when exceeded will cause the oldest among the
     not yet expired items to be kicked out of the cache.
+
+    Attributes:
+        cache: A python dict used to store key value pair.
+        lock: Thread safe RLock to access class methods.
+        timeout: Optional (Set time constraint).
+        maxSize: Set size of lrucache (Defaults to 1).
+        currentSize: Integer counter (Keeps track of lrucache size).
+        list_of_most_recent: Doublylinkedlist class instance.
+        timer: Used to periodically clear the cache when timeout is set.
     """
 
     def __init__(self, maxSize, timeout=None):

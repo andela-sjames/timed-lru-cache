@@ -11,10 +11,16 @@ class memoized_cache(Decoratorfunc):
     NB: Callable class decorator applied on a function returns an
     instance of the decorator class instead of a modified
     function as with function decorators.
+
+    Attributes:
+        func: The decorated function.
+        cache: An instance of the LRUCache.
+        hits: The number of times a cache value is used.
+        misses: The number of times a cache is not used.
     """
 
-    def __init__(self, fn, cache, timeout=None):
-        self.fn = fn
+    def __init__(self, func, cache):
+        self.func = func
         self.cache = cache
         self.hits = 0
         self.misses = 0
@@ -40,7 +46,7 @@ class memoized_cache(Decoratorfunc):
         if result is None:
             # We have an entry not in the cache
             self.misses += 1
-            result = self.fn(*args, **kwargs)
+            result = self.func(*args, **kwargs)
             self.cache[key] = result
         else:
             self.hits += 1
