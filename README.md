@@ -174,3 +174,6 @@ get_random.cache_info() # memoized_cache(hits=2, misses=7, maxsize=5, currsize=0
 # stop the timer
 get_random.cache.stop_timer()
 ```
+
+### test
+`python setup.py test`

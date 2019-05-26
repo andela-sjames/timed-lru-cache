@@ -42,4 +42,5 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
     install_requires=[],
+    test_suite = "tests.test_lru_cache",
 )

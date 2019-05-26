@@ -163,7 +163,7 @@ class LRUTimeConstraintTestCase(unittest.TestCase):
 
 
 class LRUMemoizationTestCase(unittest.TestCase):
-    def test_it(self):
+    def test_memoization(self):
         test_lru_with_memoized_cache(5, self)
 
 

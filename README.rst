@@ -187,3 +187,8 @@ Sample Usage with the decorator (maxSize and timeout)
 
    # stop the timer
    get_random.cache.stop_timer()
+
+test
+~~~~
+
+``python setup.py test``
